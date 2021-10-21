@@ -8,7 +8,7 @@ let stocks;
 
 // set the dimensions and margins of the graph
 const margin = { top: 30, right: 30, bottom: 70, left: 60 },
-  width = 800 - margin.left - margin.right,
+  width = 700 - margin.left - margin.right,
   height = 400 - margin.top - margin.bottom;
 
 // append the svg object to the body of the page
