@@ -1,6 +1,5 @@
-// Import stylesheets
-import './style.css';
 import * as d3 from 'd3';
+// import './style.css';
 
 // Write Javascript code!
 const appDiv = document.getElementById('app');
