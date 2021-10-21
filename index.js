@@ -37,13 +37,13 @@ d3.csv(
 
   // X axis
   const x = d3
-    .scaleTime()
+    .scaleLinear()
     .domain(
       d3.extent(data, function (d, i) {
         return d.date;
       })
     )
-    .range([0, width]);
+    .range([0, width * 20]);
 
   console.log(x);
 
@@ -86,7 +86,7 @@ d3.csv(
   // Bars
   svg
     .selectAll('mybar')
-    .data(data.filter((d, i) => new Date(d.date * 1000).getDay() === 5))
+    .data(data)
     .join('rect')
     .attr('x', (d) => x(d.date) ?? '')
     .attr('y', (d) => y(d.value))
