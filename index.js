@@ -33,6 +33,8 @@ d3.csv(
 ).then(function (data) {
   stocks = data;
   d3.extent;
+
+
   // X axis
   const x = d3
     .scaleTime()
@@ -42,7 +44,9 @@ d3.csv(
       })
     )
     .range([0, width]);
+
   console.log(x);
+
   // .domain(data.map((d) => d.Time || '').filter((_, i) => i % 6 === 0))
   // svg
   //   .append('g')
@@ -93,10 +97,9 @@ d3.csv(
     .attr('fill', 'orange')
     .on('mouseover', function (da) {
       console.log(da.srcElement.id);
-      const text = stocks.find((el) => (el.sec = da.srcElement.id));
+      const text = stocks.find((el) => (el.sec === da.srcElement.id));
       console.log(text);
       return tooltip
-        .enter()
         .style('visibility', 'visible')
         .text(`${text.value}\n${text.volume}`);
     })
