@@ -1,5 +1,6 @@
+import './style.css';
 import * as d3 from 'd3';
-// import './style.css';
+
 
 // Write Javascript code!
 const appDiv = document.getElementById('app');
@@ -14,7 +15,7 @@ const margin = { top: 30, right: 30, bottom: 70, left: 60 },
 const svg = d3
   .select('#my_dataviz')
   .append('svg')
-  .attr('width', width + margin.left + margin.right)
+  .attr('width', 251 * 20 + margin.left + margin.right)
   .attr('height', height + margin.top + margin.bottom)
   .append('g')
   .attr('transform', `translate(${margin.left},${margin.top})`);
@@ -31,20 +32,15 @@ d3.csv(
   }
 ).then(function (data) {
   stocks = data;
-  d3.extent;
-
 
   // X axis
   const x = d3
-    .scaleLinear()
+    .scaleBand()
     .domain(
-      d3.extent(data, function (d, i) {
-        return d.date;
-      })
+      data.map(d => d.date)
     )
-    .range([0, width * 20]);
+    .range([ 0, data.length * 20]);
 
-  console.log(x);
 
   // .domain(data.map((d) => d.Time || '').filter((_, i) => i % 6 === 0))
   // svg
@@ -62,7 +58,6 @@ d3.csv(
 
   // Add Y axis
   const y = d3.scaleLinear().domain([0, 40]).range([height, 0]);
-  svg.append('g').call(d3.axisLeft(y));
 
   const z = d3
     .scaleLinear()
@@ -100,7 +95,7 @@ d3.csv(
       console.log(text);
       return tooltip
         .style('visibility', 'visible')
-        .text(`${text.value}\n${text.volume}`);
+        .text(`${text.value}\n${text.volume}\n${text.date.toLocaleDateString()}`);
     })
     .on('mousemove', function () {
       return tooltip
@@ -129,4 +124,13 @@ d3.csv(
           return z(d.volume);
         })
     );
+
+    var zoom = d3.behavior.zoom()
+      .scaleExtent([1, 1])
+      .x(x)
+      .on('zoom', function() {
+        svg.select('.data').attr('d', line)
+      });
+
+    svg.call(zoom);
 });
